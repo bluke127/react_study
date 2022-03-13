@@ -39,12 +39,26 @@ function MinutesToHours() {
     </div>
   );
 }
-
+function KimToMiles() {
+  return <h3>KM 2 M</h3>;
+}
 function App() {
+  const [index, setIndex] = React.useState('0');
+  const onSelect = event => {
+    setIndex(event.target.value);
+  };
   return (
     <div>
       <h1>Super Converter</h1>
-      <MinutesToHours></MinutesToHours>
+      <select onChange={onSelect} value={index}>
+        <option value="x">Please Select</option>
+        <option value="0">Minutes & Hours</option>
+        <option value="1">Kim & Miles</option>
+      </select>
+      <hr />
+      {index === 'x' ? 'Please Select' : null}
+      {index === '0' ? <MinutesToHours /> : null}
+      {index === '1' ? <KimToMiles /> : null}
     </div>
   );
 }
