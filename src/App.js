@@ -1,10 +1,28 @@
-import Button from './Button';
-import styles from './App.module.css';
+import { useState, useEffect } from 'react';
 function App() {
+  const [counter, setValue] = useState(0);
+  const [keyword, setKeyword] = useState('');
+  const onClick = () => setValue((prev) => prev + 1);
+  const onChange = (event) => setKeyword(event.target.value);
+  console.log('i run all the time');
+  const iRunOnlyOnce = () => {
+    console.log('i run only once');
+  };
+  useEffect(() => {
+    console.log('call the api');
+  }, []);
+  useEffect(() => {
+    console.log('i run when change keyword', keyword), [keyword];
+  });
+  useEffect(() => {
+    console.log('i run when change keyword or counter', keyword),
+      [keyword, counter];
+  });
   return (
     <div>
-      <h1 className={styles.title}>Welcome back!</h1>
-      <Button text={'답답해'} />
+      <input onChange={onChange} type="text" placeholder="search here..." />
+      <h1>{counter}</h1>
+      <button onClick={onClick}>click me</button>
     </div>
   );
 }
