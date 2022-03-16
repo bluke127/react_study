@@ -1,39 +1,23 @@
 import { useState, useEffect } from 'react';
-function Hello() {
-  useEffect(() => {
-    console.log('created');
-    return () => console.log('destory');
-  }, []);
-  return <h1>Hello</h1>;
-}
+
 function App() {
-  const [toDo, setTodo] = useState('');
-  const [toDos, setToDos] = useState([]);
-  const onChange = (e) => setTodo(e.target.value);
-  console.log(toDo);
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (toDo === ' ') {
-      return;
-    }
-    setToDos((currentArray) => [toDo, ...currentArray]);
-    setTodo('');
-  };
-  console.log(toDos);
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  useEffect(() => {
+    fetch('https://api.coinpaprika.com/v1/tickers')
+      .then((data) => data.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
   return (
     <div>
-      <form onSubmit={onSubmit}>
-        <input
-          onChange={onChange}
-          value={toDo}
-          type="text"
-          placeholder="toDolist"
-        />
-        <button>Add to Do</button>
-      </form>
+      <h1>The conins</h1>
+      {loading ? <strong>Loading...</strong> : null}
       <ul>
-        {toDos.map((item, index) => (
-          <li key={index}>{item}</li>
+        {coins.map((item, index) => (
+          <li key={index}>{item.name}</li>
         ))}
       </ul>
     </div>
