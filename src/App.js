@@ -1,28 +1,41 @@
 import { useState, useEffect } from 'react';
-function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState('');
-  const onClick = () => setValue((prev) => prev + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-  console.log('i run all the time');
-  const iRunOnlyOnce = () => {
-    console.log('i run only once');
-  };
+function Hello() {
   useEffect(() => {
-    console.log('call the api');
+    console.log('created');
+    return () => console.log('destory');
   }, []);
-  useEffect(() => {
-    console.log('i run when change keyword', keyword), [keyword];
-  });
-  useEffect(() => {
-    console.log('i run when change keyword or counter', keyword),
-      [keyword, counter];
-  });
+  return <h1>Hello</h1>;
+}
+function App() {
+  const [toDo, setTodo] = useState('');
+  const [toDos, setToDos] = useState([]);
+  const onChange = (e) => setTodo(e.target.value);
+  console.log(toDo);
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if (toDo === ' ') {
+      return;
+    }
+    setToDos((currentArray) => [toDo, ...currentArray]);
+    setTodo('');
+  };
+  console.log(toDos);
   return (
     <div>
-      <input onChange={onChange} type="text" placeholder="search here..." />
-      <h1>{counter}</h1>
-      <button onClick={onClick}>click me</button>
+      <form onSubmit={onSubmit}>
+        <input
+          onChange={onChange}
+          value={toDo}
+          type="text"
+          placeholder="toDolist"
+        />
+        <button>Add to Do</button>
+      </form>
+      <ul>
+        {toDos.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
