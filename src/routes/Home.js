@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Movie from './components/Movie';
+import Movie from '../components/Movie';
 function Home() {
   const [loading, setLoading] = useState(true);
   const [movies, setMovies] = useState([]);
@@ -30,6 +30,7 @@ function Home() {
               summary={movie.summary}
               genres={movie.genres}
               key={index}
+              id={movie.id}
             />
           ))}
         </div>
